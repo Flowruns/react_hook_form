@@ -1,5 +1,6 @@
 ﻿import React from 'react';
 import {useForm} from "react-hook-form";
+import {DevTool} from "@hookform/devtools";
 
 
 // Компонент ютуб формы
@@ -9,7 +10,7 @@ export const YouTubeForm = () => {
     const form = useForm()
     
     // Регистрируем элемент управления формы с помощью хука useForm
-    const {register} = form
+    const {register, control} = form
    
     // Возвращаем JSX, который содержит структуру компонента формы
     return (
@@ -40,6 +41,7 @@ export const YouTubeForm = () => {
 
                 <button>Отправить</button>
             </form>
+            <DevTool control={control}/>
         </div>
     );
 };
