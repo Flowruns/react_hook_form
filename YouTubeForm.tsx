@@ -23,7 +23,10 @@ export const YouTubeForm = () => {
     const form = useForm<FormValues>()
     
     // Регистрируем элемент управления формы с помощью хука useForm
-    const {register, control, handleSubmit} = form
+    const {register, control, handleSubmit, formState} = form
+    
+    // Создаем объект ошибок
+    const {errors} = formState
     
     // Функция, которая вызывается при нажатии кнопки "ОтправитЬ"
     const onSubmit = (data: FormValues) => {
@@ -35,34 +38,47 @@ export const YouTubeForm = () => {
         <div>
             <h1>YouTube форма</h1>
             <form onSubmit={handleSubmit(onSubmit)} noValidate>
+                <div className='form-control'>
                 <label htmlFor="username">Имя пользователя</label>
-                <input 
-                    type="text" 
+                <input
+                    type="text"
                     id="username"
-                    {...register("userName", {required: {
-                        value: true,
-                        message: "Необходимо ввести имя пользователя"
-                    }})}
+                    {...register("userName", {
+                        required: {
+                            value: true,
+                            message: "Необходимо ввести имя пользователя"
+                        }
+                    })}
                 />
-
+                <p className='error'>{errors.userName?.message}</p>
+                </div>
+                <div className='form-control'>
                 <label htmlFor="email">Почта</label>
-                <input 
-                    type="email" 
+                <input
+                    type="email"
                     id="email"
-                    {...register("email", {pattern: {
+                    {...register("email", {
+                        pattern: {
                             value:
                                 /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
                             message: "Неверный формат электронной почты",
+                        }
+                    })}
+                />
+                <p className='error'>{errors.email?.message}</p>
+                </div>
+                <div className='form-control'>
+                <label htmlFor="channel">Канал</label>
+                <input
+                    type="text"
+                    id="channel"
+                    {...register("channel",{ required: {
+                            value: true,
+                            message: "Необходимо ввести канал"
                         }})}
                 />
-
-                <label htmlFor="channel">Канал</label>
-                <input 
-                    type="text" 
-                    id="channel"
-                    {...register("channel")}
-                />
-
+                <p className='error'>{errors.channel?.message}</p>
+                </div>
                 <button>Отправить</button>
             </form>
             <DevTool control={control}/>
