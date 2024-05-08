@@ -62,6 +62,18 @@ export const YouTubeForm = () => {
                             value:
                                 /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
                             message: "Неверный формат электронной почты",
+                        },
+                        validate: {
+                            notAdmin: (fieldValue) => {
+                                return (
+                                    fieldValue !== "admin@example.com" || "Введите другой адрес электронной почты"
+                                )
+                            },
+                            notBlackListed: (fieldValue) => {
+                                return (
+                                    !fieldValue.endsWith("baddomain.com") || "Этот домен не поддерживается"
+                                )
+                            }
                         }
                     })}
                 />
