@@ -2,22 +2,30 @@
 import {useForm} from "react-hook-form";
 import {DevTool} from "@hookform/devtools";
 
-
+type FormValues = {
+    userName: string,
+    email: string,
+    channel: string
+}
 // Компонент ютуб формы
 export const YouTubeForm = () => {
     
     // Используем хук из библиотеки  react-hook-form
-    const form = useForm()
+    const form = useForm<FormValues>()
     
     // Регистрируем элемент управления формы с помощью хука useForm
-    const {register, control} = form
+    const {register, control, handleSubmit} = form
+    
+    // Функция, которая вызывается при нажатии кнопки "ОтправитЬ"
+    const onSubmit = (data: FormValues) => {
+        console.log('Форма отправлена', data)
+    }
    
     // Возвращаем JSX, который содержит структуру компонента формы
     return (
         <div>
             <h1>YouTube форма</h1>
-
-            <form>
+            <form onSubmit={handleSubmit(onSubmit)}>
                 <label htmlFor="username">Имя пользователя</label>
                 <input 
                     type="text" 
