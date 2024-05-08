@@ -2,11 +2,20 @@
 import {useForm} from "react-hook-form";
 import {DevTool} from "@hookform/devtools";
 
+
+// Задаем типы данных для полей
 type FormValues = {
+    
+    // Имя пользователя
     userName: string,
+    
+    // Почта
     email: string,
+    
+    // Канал
     channel: string
 }
+
 // Компонент ютуб формы
 export const YouTubeForm = () => {
     
@@ -25,19 +34,26 @@ export const YouTubeForm = () => {
     return (
         <div>
             <h1>YouTube форма</h1>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(onSubmit)} noValidate>
                 <label htmlFor="username">Имя пользователя</label>
                 <input 
                     type="text" 
                     id="username"
-                    {...register("userName")}
+                    {...register("userName", {required: {
+                        value: true,
+                        message: "Необходимо ввести имя пользователя"
+                    }})}
                 />
 
                 <label htmlFor="email">Почта</label>
                 <input 
                     type="email" 
                     id="email"
-                    {...register("email")}
+                    {...register("email", {pattern: {
+                            value:
+                                /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+                            message: "Неверный формат электронной почты",
+                        }})}
                 />
 
                 <label htmlFor="channel">Канал</label>
